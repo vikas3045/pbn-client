@@ -14,56 +14,57 @@ const apiUrl = 'http://ec2-13-233-166-180.ap-south-1.compute.amazonaws.com:3000/
 const columns = [
     { title: 'Claim ID', width: 100, dataIndex: 'claimId', key: 'claimId', fixed: 'left' },
     { title: 'Payer', width: 130, dataIndex: 'payer', key: 'payer', fixed: 'left', width: 150 },
-    { title: 'Patient Name', dataIndex: 'patientName', key: 'patientName', width: 150 },
+    { title: 'Patient Name', dataIndex: 'patientName', key: 'patientName', fixed: 'left', width: 200 },
     { title: 'UHID', dataIndex: 'uhid', key: 'uhid', width: 150 },
     { title: 'Admission Date', dataIndex: 'hospAdmissionDate', key: 'hospAdmissionDate', width: 200 },
     { title: 'Discharge Date', dataIndex: 'hospDischargeDate', key: 'hospDischargeDate', width: 200 },
-    { title: 'Statement From Date', dataIndex: 'StatementFromDate', key: 'StatementFromDate', width: 200 },
-    { title: 'Statement Thru Date', dataIndex: 'StatementThruDate', key: 'StatementThruDate', width: 200 },
-    { title: 'Member ID', dataIndex: 'MemberId', key: 'MemberId', width: 150 },
-    { title: 'Member Last Name', dataIndex: 'MemberLastName', key: 'MemberLastName', width: 150 },
-    { title: 'MemberFirstName', dataIndex: 'MemberFirstName', key: 'MemberFirstName', width: 150 },
+    // { title: 'Statement From Date', dataIndex: 'StatementFromDate', key: 'StatementFromDate', width: 200 },
+    // { title: 'Statement Thru Date', dataIndex: 'StatementThruDate', key: 'StatementThruDate', width: 200 },
+    // { title: 'Member ID', dataIndex: 'MemberId', key: 'MemberId', width: 150 },
+    // { title: 'Member Last Name', dataIndex: 'MemberLastName', key: 'MemberLastName', width: 150 },
+    // { title: 'MemberFirstName', dataIndex: 'MemberFirstName', key: 'MemberFirstName', width: 150 },
     { title: 'Provider Facility Name', dataIndex: 'CL_ProviderFacilityName', key: 'CL_ProviderFacilityName', width: 150 },
     { title: 'Line Number', dataIndex: 'CL_LineNumber', key: 'CL_LineNumber', width: 150 },
     { title: 'Dos From', dataIndex: 'CL_DosFrom', key: 'CL_DosFrom', width: 150 },
     { title: 'Dos To', dataIndex: 'CL_DosTo', key: 'CL_DosTo', width: 150 },
     { title: 'Proc Code', dataIndex: 'CL_ProcCode', key: 'CL_ProcCode', width: 150 },
-    { title: 'CL_Quantity', dataIndex: 'CL_Quantity', key: 'CL_Quantity', width: 150 },
-    { title: 'Diagnosis', dataIndex: 'CL_Diag1', key: 'CL_Diag1', width: 150 }
+    { title: 'Quantity', dataIndex: 'CL_Quantity', key: 'CL_Quantity', width: 150 },
+    { title: 'Diagnosis', dataIndex: 'CL_Diag1', key: 'CL_Diag1', width: 150 },
+    { title: 'Transaction ID', dataIndex: 'transactionId', key: 'transactionId', width: 200 }
 ];
 
 class CustomTable extends Component {
     constructor(props) {
         super();
-        this.state = {
-            data: []
-        };
+        // this.state = {
+        //     data: props.tableData
+        // };
     }    
-    loadClaims() {
-        $.ajax({
-            url: apiUrl + 'ClaimTransaction',
-            type: 'GET',
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function(responseData) {
-                this.setState({
-                    data: responseData
-                });
-            }.bind(this),
-            error: function(errorData) {
-                debugger;
-            }
-        });
-    }
+    // loadClaims() {
+    //     $.ajax({
+    //         url: apiUrl + 'ClaimTransaction',
+    //         type: 'GET',
+    //         contentType: 'application/json; charset=utf-8',
+    //         dataType: 'json',
+    //         success: function(responseData) {
+    //             // this.setState({
+    //             //     data: responseData
+    //             // });
+    //         }.bind(this),
+    //         error: function(errorData) {
+    //             debugger;
+    //         }
+    //     });
+    // }
     componentDidMount() {
-        this.loadClaims();
+        //this.loadClaims();
     }
     render() {
         return ( <
             Table columns = { columns }
-            dataSource = { this.state.data }
+            dataSource = { this.props.tableData }
             scroll = {
-                { x: 1500, y: 600 }
+                { x: 1500, y: 700 }
             }
             />
         );
@@ -116,14 +117,12 @@ class PayerTable extends Component {
 }
 
 /////////Claim Form////////
-const FormItem = Form.Item;
 class ClaimForm extends React.Component {
   state = {
     confirmDirty: false,
     autoCompleteResult: [],
   };
   postClaim = (postData) => {
-      debugger;
       $.ajax({
         url: apiUrl + 'ClaimTransaction',
         type: 'POST',
@@ -239,56 +238,7 @@ class ClaimForm extends React.Component {
             <Input />
           )}
         </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="Statement From Date"
-        >
-          {getFieldDecorator('StatementFromDate', {
-            rules: [{ required: false, message: 'Please input Statement From Date' }],
-          })(
-            <Input />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="Statement Thru Date"
-        >
-          {getFieldDecorator('StatementThruDate', {
-            rules: [{ required: false, message: 'Please input Statement Thru Date' }],
-          })(
-            <Input />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="Member ID"
-        >
-          {getFieldDecorator('MemberId', {
-            rules: [{ required: false, message: 'Please input Member ID' }],
-          })(
-            <Input />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="Member First Name"
-        >
-          {getFieldDecorator('MemberFirstName', {
-            rules: [{ required: false, message: 'Please input Member First Name' }],
-          })(
-            <Input />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="Member Last Name"
-        >
-          {getFieldDecorator('MemberLastName', {
-            rules: [{ required: false, message: 'Please input Member Last Name' }],
-          })(
-            <Input />
-          )}
-        </FormItem>
+        
         <FormItem
           {...formItemLayout}
           label="Provider Facility Name"
@@ -388,10 +338,114 @@ class AddClaim extends Component{
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
+          footer={null}
         >
           <WrappedClaimForm />
         </Modal>
       </div>
+    );
+  }
+}
+
+////////UHIDSearch/////////
+const FormItem = Form.Item;
+
+function hasErrors(fieldsError) {
+  return Object.keys(fieldsError).some(field => fieldsError[field]);
+}
+
+class UHIDSearchForm extends React.Component {
+  constructor(props){
+    super();
+    this.state ={
+      tableData: []
+    };
+  }
+  componentDidMount() {
+    // To disabled submit button at the beginning.
+    this.props.form.validateFields();
+    this.loadClaims();
+  }
+
+  loadClaims() {
+    $.ajax({
+        url: apiUrl + 'ClaimTransaction',
+        type: 'GET',
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(responseData) {
+            // this.setState({
+            //     data: responseData
+            // });
+            this.setState({
+              tableData: responseData
+            });
+        }.bind(this),
+        error: function(errorData) {
+            debugger;
+        }
+    });
+}
+
+  getClaim(sUhid) {
+    debugger;
+        $.ajax({
+            url: apiUrl + 'queries/selectClaimTransactionByUhid',
+            type: 'GET',
+            data: {"uhid": sUhid.uhidSearch},
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(responseData) {
+                this.setState({
+                  tableData: responseData
+              });
+            }.bind(this),
+            error: function(errorData) {
+                debugger;
+            }
+        });
+    }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      this.getClaim(values);
+      if (!err) {
+        console.log('Received values of form: ', values);
+      }
+    });
+  }
+
+  render() {
+    const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+
+    // Only show error after a field is touched.
+    const uhidSearchError = isFieldTouched('uhidSearch') && getFieldError('uhidSearch');
+    return (
+      <div>
+      <Form layout="inline" onSubmit={this.handleSubmit}>
+        <FormItem
+          validateStatus={uhidSearchError ? 'error' : ''}
+          help={uhidSearchError || ''}
+        >
+          {getFieldDecorator('uhidSearch', {
+            rules: [{ required: true, message: 'Please input UHID' }],
+          })(
+            <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="UHID" />
+          )}
+        </FormItem>
+        <FormItem>
+          <Button
+            type="primary"
+            htmlType="submit"
+            disabled={hasErrors(getFieldsError())}
+          >
+            Search
+          </Button>
+        </FormItem>
+      </Form>
+       <CustomTable tableData={this.state.tableData}/>
+       </div>
     );
   }
 }
@@ -403,13 +457,13 @@ class App extends Component{
             <nav className="navbar navbar-light bg-light">
               <span className="navbar-brand mb-0 h1">Change Squad</span>
             </nav>
-            <div className="container">
+            <div className="container-fluid">
             <Tabs>
                 <TabList><Tab>Claims</Tab><Tab>Payers</Tab></TabList>
                 <TabPanel>
                     <h2> Claims </h2>
                     <AddClaim />
-                    <CustomTable />
+                    <WrappedUHIDSearchForm />                   
                 </TabPanel>
                 <TabPanel>
                   <h2> Payers </h2>
@@ -423,5 +477,6 @@ class App extends Component{
 }
 
 const WrappedClaimForm = Form.create()(ClaimForm);
+const WrappedUHIDSearchForm = Form.create()(UHIDSearchForm);
 
 export default App;
