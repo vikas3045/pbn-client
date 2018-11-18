@@ -12,8 +12,8 @@ const apiUrl = 'http://ec2-13-233-166-180.ap-south-1.compute.amazonaws.com:3000/
 
 /////////////Custom Table//////////////
 const columns = [
-    { title: 'Claim ID', width: 100, dataIndex: 'claimId', key: 'claimId', fixed: 'left' },
-    { title: 'Payer', width: 130, dataIndex: 'payer', key: 'payer', fixed: 'left', width: 150 },
+    
+    { title: 'Payer', dataIndex: 'payer', key: 'payer', fixed: 'left', width: 300 },
     { title: 'Patient Name', dataIndex: 'patientName', key: 'patientName', fixed: 'left', width: 200 },
     { title: 'UHID', dataIndex: 'uhid', key: 'uhid', width: 150 },
     { title: 'Admission Date', dataIndex: 'hospAdmissionDate', key: 'hospAdmissionDate', width: 200 },
@@ -30,7 +30,8 @@ const columns = [
     { title: 'Proc Code', dataIndex: 'CL_ProcCode', key: 'CL_ProcCode', width: 150 },
     { title: 'Quantity', dataIndex: 'CL_Quantity', key: 'CL_Quantity', width: 150 },
     { title: 'Diagnosis', dataIndex: 'CL_Diag1', key: 'CL_Diag1', width: 150 },
-    { title: 'Transaction ID', dataIndex: 'transactionId', key: 'transactionId', width: 200 }
+    { title: 'Transaction ID', dataIndex: 'transactionId', key: 'transactionId', width: 400 },
+    { title: 'Claim ID', width: 100, dataIndex: 'claimId', key: 'claimId' }
 ];
 
 class CustomTable extends Component {
@@ -64,7 +65,7 @@ class CustomTable extends Component {
             Table columns = { columns }
             dataSource = { this.props.tableData }
             scroll = {
-                { x: 1500, y: 700 }
+                { x: 2600, y: 350 }
             }
             />
         );
@@ -109,7 +110,7 @@ class PayerTable extends Component {
           Table columns = { payerColumns }
           dataSource = { this.state.data }
           scroll = {
-              { x: 600 }
+              { x: 600, y: 700 }
           }
           />
       );
